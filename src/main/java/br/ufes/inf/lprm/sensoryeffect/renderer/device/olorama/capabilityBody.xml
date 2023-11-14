@@ -1,0 +1,14 @@
+		<cidl:SensoryDeviceCapability xsi:type="dcdv:ScentCapabilityType" 
+			id="vortexScent01" maxIntensity="100" numOfLevels="1" locator="urn:mpeg:mpeg-v:01-
+			SI-LocationCS-NS:center">
+			<dcdv:Scent>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:rose</dcdv:Scent>
+				<dcdv:Scent>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:acacia</dcdv:Scent>
+				<dcdv:Scent>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:mint</dcdv:Scent>
+				<dcdv:Scent>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:orange</dcdv:Scent>
+				<dcdv:Scent>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:chrysanthemum</dcdv:Scent>
+				<dcdv:Scent>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:cinnamon</dcdv:Scent>
+				<dcdv:Scent>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:bacon</dcdv:Scent>
+				<dcdv:Scent>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:rubbish_acrid</dcdv:Scent>
+				<dcdv:Scent>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:chocolate_dark</dcdv:Scent>
+				<dcdv:Scent>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:banana</dcdv:Scent>
+		</cidl:SensoryDeviceCapability>

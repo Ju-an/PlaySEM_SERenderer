@@ -2,12 +2,15 @@
 
 <configuration>
 	<!-- Main configuration -->
-	<communicationServiceBroker>upnpService</communicationServiceBroker>
+	<communicationServiceBroker>websocketService</communicationServiceBroker>
 	<metadataParser>mpegvParser</metadataParser>
 	<lightDevice>mockLight</lightDevice>
 	<windDevice>mockWind</windDevice>
+	<!-- <windDevice>arduinoWindDevice</windDevice> -->
 	<vibrationDevice>mockVibration</vibrationDevice>
 	<scentDevice>mockScent</scentDevice> 
+	<!-- <scentDevice>blunoScentDevice</scentDevice>  -->
+	<!-- <scentDevice>exhaliaScentDevice</scentDevice>  -->
 	<debugMode>true</debugMode>
 
 	<!-- Communication services -->
@@ -121,6 +124,38 @@
 			</properties>
 		</device>
 		
+		<!-- Olorama Scent Device -->
+		<device>
+			<id>oloramaScentDevice</id>
+			<deviceClass>br.ufes.inf.lprm.sensoryeffect.renderer.device.olorama.OloramaScentDevice</deviceClass>
+			<connectivityInterface>UDP</connectivityInterface>
+			<properties>
+				<ScentSlot01>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:burning_rubber</ScentSlot01>
+				<ScentSlot02>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:acacia</ScentSlot02>
+				<ScentSlot03>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:mint</ScentSlot03>
+				<ScentSlot04>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:orange</ScentSlot04>
+				<ScentSlot05>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:rose</ScentSlot05>
+				<ScentSlot06>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:lavender</ScentSlot06>
+				<ScentSlot07>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:bacon</ScentSlot07>
+				<ScentSlot08>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:rubbish_acrid</ScentSlot08>
+				<ScentSlot09>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:coffee_cream</ScentSlot09>
+				<ScentSlot10>urn:mpeg:mpeg-v:01-SI-ScentCS-NS:banana</ScentSlot10>
+				<delay>0</delay>
+				<increasedIntensity>false</increasedIntensity>
+			</properties>
+		</device>
+
+		<!-- bHaptics Scent Device -->
+		<device>
+			<id>bhapticsVibrationDevice</id>
+			<deviceClass>br.ufes.inf.lprm.sensoryeffect.renderer.device.bhaptics.BHapticsVibrationDevice</deviceClass>
+			<connectivityInterface>websocket</connectivityInterface>
+			<properties>
+				<app-id>a0AAAAaaaAA0AaaaaaAA</app-id>
+				<app-key>9z99Z9ZZZzz9ZZZ9zZZz</app-key>
+			</properties>
+		</device>
+
 		<!-- Bluno Scent Device -->
 		<device>
 			<id>blunoScentDevice</id>
@@ -141,23 +176,6 @@
 			<id>sedroidVibrationDevice</id>
 			<deviceClass>br.ufes.inf.lprm.sensoryeffect.renderer.device.sedroid.SedroidVibrationDevice</deviceClass>
 			<connectivityInterface>Bluetooth</connectivityInterface>
-		</device>
-		
-		<!-- amBX Devices (Light, wind, vibration) -->
-		<device>
-			<id>ambxLightDevice</id>
-			<deviceClass>br.ufes.inf.lprm.sensoryeffect.renderer.device.ambx.AmbxLightDevice</deviceClass>
-			<connectivityInterface>Usb</connectivityInterface>
-		</device>
-		<device>
-			<id>ambxVibrationDevice</id>
-			<deviceClass>br.ufes.inf.lprm.sensoryeffect.renderer.device.ambx.AmbxVibrationDevice</deviceClass>
-			<connectivityInterface>Usb</connectivityInterface>
-		</device>
-		<device>
-			<id>ambxWindDevice</id>
-			<deviceClass>br.ufes.inf.lprm.sensoryeffect.renderer.device.ambx.AmbxWindDevice</deviceClass>
-			<connectivityInterface>Usb</connectivityInterface>
 		</device>
 	</devices>
 	
@@ -213,12 +231,30 @@
 			<connectivityInterfaceClass>br.ufes.inf.lprm.sensoryeffect.renderer.connectivity.usb.UsbOutput</connectivityInterfaceClass>
 			<earlyConnection>true</earlyConnection>
 			<properties>
-				<vendorId>0x0471</vendorId>
-				<productId>0x083f</productId>
+				<vendorId>0x1781</vendorId>
+				<productId>0x07D0</productId>
 				<usbInterface>0</usbInterface>
 				<inEndPoint>81</inEndPoint>
-				<outEndPoint>2</outEndPoint>
+				<outEndPoint>1</outEndPoint>
 				<timeout>5000</timeout>
+			</properties>
+		</connectivityInterface>
+		<connectivityInterface>
+			<id>UDP</id>
+			<connectivityInterfaceClass>br.ufes.inf.lprm.sensoryeffect.renderer.connectivity.udp.UDPOutput</connectivityInterfaceClass>
+			<earlyConnection>true</earlyConnection>
+			<properties>
+				<number-of-devices>1</number-of-devices>
+				<device01-address>192.168.1.106:5010</device01-address>
+			</properties>
+		</connectivityInterface>
+		<connectivityInterface>
+			<id>websocket</id>
+			<connectivityInterfaceClass>br.ufes.inf.lprm.sensoryeffect.renderer.connectivity.socket.SocketOutput</connectivityInterfaceClass>
+			<earlyConnection>true</earlyConnection>
+			<properties>
+				<number-of-devices>1</number-of-devices>
+				<device01-address>ws://localhost:15881/v2/feedbacks</device01-address>
 			</properties>
 		</connectivityInterface>
 	</connectivityInterfaces>

@@ -1,0 +1,33 @@
+		<cidl:SensoryDeviceCapability xsi:type="dcdv:VibrationCapabilityType" 
+			id="vib01" zerothOrderDelayTime="100" firstOrderDelayTime="100"
+			maxIntensity="255" numOfLevels="255" locator="urn:mpeg:mpeg-v:01-SI-LocationCS-NS:left"/>
+		<cidl:SensoryDeviceCapability xsi:type="dcdv:VibrationCapabilityType" 
+			id="vib02" zerothOrderDelayTime="100" firstOrderDelayTime="100"
+			maxIntensity="255" numOfLevels="255" locator="urn:mpeg:mpeg-v:01-SI-LocationCS-NS:centerleft"/>
+		<cidl:SensoryDeviceCapability xsi:type="dcdv:VibrationCapabilityType" 
+			id="vib02" zerothOrderDelayTime="100" firstOrderDelayTime="100"
+			maxIntensity="255" numOfLevels="255" locator="urn:mpeg:mpeg-v:01-SI-LocationCS-NS:center"/>
+		<cidl:SensoryDeviceCapability xsi:type="dcdv:VibrationCapabilityType" 
+			id="vib02" zerothOrderDelayTime="100" firstOrderDelayTime="100"
+			maxIntensity="255" numOfLevels="255" locator="urn:mpeg:mpeg-v:01-SI-LocationCS-NS:centerright"/>
+		<cidl:SensoryDeviceCapability xsi:type="dcdv:VibrationCapabilityType" 
+			id="vib02" zerothOrderDelayTime="100" firstOrderDelayTime="100"
+			maxIntensity="255" numOfLevels="255" locator="urn:mpeg:mpeg-v:01-SI-LocationCS-NS:right"/>
+		<cidl:SensoryDeviceCapability xsi:type="dcdv:VibrationCapabilityType" 
+			id="vib02" zerothOrderDelayTime="100" firstOrderDelayTime="100"
+			maxIntensity="255" numOfLevels="255" locator="urn:mpeg:mpeg-v:01-SI-LocationCS-NS:bottom"/>
+		<cidl:SensoryDeviceCapability xsi:type="dcdv:VibrationCapabilityType" 
+			id="vib02" zerothOrderDelayTime="100" firstOrderDelayTime="100"
+			maxIntensity="255" numOfLevels="255" locator="urn:mpeg:mpeg-v:01-SI-LocationCS-NS:middle"/>
+		<cidl:SensoryDeviceCapability xsi:type="dcdv:VibrationCapabilityType" 
+			id="vib02" zerothOrderDelayTime="100" firstOrderDelayTime="100"
+			maxIntensity="255" numOfLevels="255" locator="urn:mpeg:mpeg-v:01-SI-LocationCS-NS:top"/>
+		<cidl:SensoryDeviceCapability xsi:type="dcdv:VibrationCapabilityType" 
+			id="vib02" zerothOrderDelayTime="100" firstOrderDelayTime="100"
+			maxIntensity="255" numOfLevels="255" locator="urn:mpeg:mpeg-v:01-SI-LocationCS-NS:back"/>
+		<cidl:SensoryDeviceCapability xsi:type="dcdv:VibrationCapabilityType" 
+			id="vib02" zerothOrderDelayTime="100" firstOrderDelayTime="100"
+			maxIntensity="255" numOfLevels="255" locator="urn:mpeg:mpeg-v:01-SI-LocationCS-NS:midway"/>
+		<cidl:SensoryDeviceCapability xsi:type="dcdv:VibrationCapabilityType" 
+			id="vib02" zerothOrderDelayTime="100" firstOrderDelayTime="100"
+			maxIntensity="255" numOfLevels="255" locator="urn:mpeg:mpeg-v:01-SI-LocationCS-NS:front"/>
