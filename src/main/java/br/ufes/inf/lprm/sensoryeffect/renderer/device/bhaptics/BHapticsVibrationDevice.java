@@ -39,24 +39,26 @@ public class BHapticsVibrationDevice extends SensoryEffectDeviceBase {
         throw new UnsupportedOperationException("Unimplemented method 'messageToDeviceCommand'");
     }
 
+    public VibrationMessage createVibration(int intensity, String location){
+        VibrationMessage vibrationMessage = new VibrationMessage();
+        vibrationMessage.setLocation(location);
+        vibrationMessage.setIntensity(intensity);
+        return vibrationMessage;
+    }
+
     @Override
     public void resetDevice() {
         this.appId = this.getProperties().get("app-id");
         this.appKey = this.getProperties().get("app-key");
         
-        VibrationMessage vibrationMessage = new VibrationMessage();
-		vibrationMessage.setIntensity(0);
-		vibrationMessage.setLocation(ClassificationScheme.LOCATIONURIBASE + ClassificationScheme.LOC_X_LEFT);
+        VibrationMessage vibrationMessage = createVibration(0, ClassificationScheme.LOCATIONURIBASE + ClassificationScheme.LOC_X_LEFT);
 		byte[] messageVib1 = formatMessage(vibrationMessage);
 		
-		VibrationMessage vibrationMessage2 = new VibrationMessage();
-		vibrationMessage2.setIntensity(0);
-		vibrationMessage2.setLocation(ClassificationScheme.LOCATIONURIBASE + ClassificationScheme.LOC_X_RIGHT);
+		VibrationMessage vibrationMessage2 = createVibration(0, ClassificationScheme.LOCATIONURIBASE + ClassificationScheme.LOC_X_RIGHT);
 		byte[] messageVib2 = formatMessage(vibrationMessage2);
 		
 		this.getDeviceConnectivity().sendMessage(messageVib1);
 		this.getDeviceConnectivity().sendMessage(messageVib2);
-
     }
 
     @Override
@@ -64,9 +66,39 @@ public class BHapticsVibrationDevice extends SensoryEffectDeviceBase {
         JSONObject msg = new JSONObject();
         
         VibrationMessage vibrationMessage = (VibrationMessage)sensoryEffectMessage;
-        String locations[] = vibrationMessage.getLocation().split(":");
+        String[] locations = vibrationMessage.getLocation().split(":");
         locations = Arrays.copyOfRange(locations, 4, locations.length);
         String x = "*", y = "*", z = "*";
+        x = locations[0];
+        y = locations[1];
+        z = locations[2];
+        int[] points = {};
+        if("*".equals(y)){
+            if("*".equals(x)){
+                points = VestAngles.ALL;
+            }else{
+                switch(x){
+                    case ClassificationScheme.LOC_X_LEFT:
+                        points = VestAngles.LEFT;
+                    break;
+                    case ClassificationScheme.LOC_X_CENTERLEFT:
+                        points = VestAngles.CENTERLEFT;
+                    break;
+                    case ClassificationScheme.LOC_X_CENTER:
+                        points = VestAngles.CENTER;
+                    break;
+                    case ClassificationScheme.LOC_X_CENTERRIGHT:
+                        points = VestAngles.CENTERRIGHT;
+                    break;
+                    case ClassificationScheme.LOC_X_RIGHT:
+                        points = VestAngles.RIGHT;
+                    break;
+                }
+            }
+        }else{
+
+        }
+        /*
         if(locations.length == 1){
             if(VIBRATION_X.contains(locations[0])){
                 x = locations[0];
@@ -81,23 +113,18 @@ public class BHapticsVibrationDevice extends SensoryEffectDeviceBase {
             x = locations[0];
             y = locations[1];
             z = locations[2];
-        }
+        }*/
 
         xyzToAngles(x, y, z);
 
         return jsonToByteArray(msg);
     }
 
-    /*º x
-    z   -45	-23	0	23	45
-        -90	-90	0	90	90
-        -135	-157	180	157	135
-     */
     public int[] xyzToAngles(String x, String y, String z){
         int[] angles;
         //if neither is wildcard, then return a single point
         if(!x.equals("*") && !y.equals("*") && !z.equals("*")){
-            angles = new int[0];
+            angles = new int[1];
             angles[0] = xyzToAngle(x, y, z);
             return angles;
         }
@@ -111,6 +138,7 @@ public class BHapticsVibrationDevice extends SensoryEffectDeviceBase {
             angles[2] = xyzToAngle("center", y, z);
             angles[3] = xyzToAngle("centerright", y, z);
             angles[4] = xyzToAngle("right", y, z);
+            //TODO: remove duplicated angles from list
             return angles;
         }
         angles = new int[6];
@@ -122,6 +150,40 @@ public class BHapticsVibrationDevice extends SensoryEffectDeviceBase {
         return angle;
     }
 
+    public int xyzToHeight(String x, String y, String z){
+        return 0;
+    }
+
+    public static int closestIndex(int[] array, int number){
+        int closest = 0;
+        int current = 360;
+        for(int i=0; i<array.length; i++){
+            int error = Math.abs(array[i] - number);
+            if(error < current){
+                current = error;
+                closest = i;
+            }
+        }
+        return closest;
+    }
+
+    /**
+     * Returns the haptic vest point (from the 40 points) based on angle and height
+     * @param angle 0 to 360º (0,360 = frontal center)
+     * @param height 0 to 100% (0 = bottom, 100% = top)
+     * @return
+     */
+    public static int directionToDot(int angle, int height){
+        int[] angles = {0, 45, 90, 135, 180, 225, 270, 315, 360};
+        int[] horizontalDots = {2, 3, 23, 22, 21, 20, 0, 1, 2};
+        int[] heights = {100, 75, 50, 25, 0};
+        int[] verticalOffsets = {0, 4, 8, 12, 16};
+        int firstDot = horizontalDots[closestIndex(angles, angle)];
+        int dotOffset = verticalOffsets[closestIndex(heights, height)];
+        //TODO: Extrapolate to multiple close points instead of the nearest. For this, the intensity should be divided
+        return firstDot + dotOffset;
+    }
+
     public byte[] jsonToByteArray(JSONObject obj){
         //ByteArrayOutputStream stream = new ByteArrayOutputStream();
         //Json.createWriter(stream).write(obj); //import javax.json.JsonWriter;
@@ -129,6 +191,8 @@ public class BHapticsVibrationDevice extends SensoryEffectDeviceBase {
         //byte[] sendData = stream.toByteArray();
         return obj.toJSONString().getBytes();
     }
+
+
 
     /*
 def submit_dot(key, position, dot_points, duration_millis):

@@ -1,20 +1,21 @@
 package br.ufes.inf.lprm.sensoryeffect.renderer.connectivity.socket;
 
+import java.net.URI;
+
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
-public class WebSocketClient {
+import br.ufes.inf.lprm.sensoryeffect.renderer.connectivity.ConnectionDeviceBase;
+
+public class WebSocketClient extends ConnectionDeviceBase{
     
     private WebSocketContainer container;
     private Session session;
-    private boolean connected;
+    protected String address;
+    protected URI uri;
 
-    public boolean isConnected(){
-        return connected;
-    };
-
-    public void setConnected(boolean connected){
-        this.connected = connected;
+    public WebSocketClient(int id) {
+        super(id);
     }
 
     public WebSocketContainer getContainer() {
@@ -31,5 +32,22 @@ public class WebSocketClient {
 
     public void setSession(Session session) {
         this.session = session;
+    }
+
+    
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public URI getUri() {
+        return uri;
+    }
+
+    public void setUri(URI uri) {
+        this.uri = uri;
     }
 }
